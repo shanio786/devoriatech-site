@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "H1vnko2WKpW_GtQ7-Kh0Q"
+uri = "file://devoriatech-site-backup.tar.gz"
+type = "unspecified"
+title = "Devoria Tech — Full Site Backup"

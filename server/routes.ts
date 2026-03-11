@@ -365,6 +365,80 @@ export async function registerRoutes(
     }
   });
 
+  app.get("/sitemap.xml", async (_req, res) => {
+    const DOMAIN = "https://devoriatech.com";
+    const today = new Date().toISOString().split("T")[0];
+
+    const staticPages = [
+      { url: "/", priority: "1.0", changefreq: "weekly" },
+      { url: "/services", priority: "0.9", changefreq: "monthly" },
+      { url: "/services/digital-marketing", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/seo", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/paid-advertising", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/content-strategy", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/web-development", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/web-development/wordpress-shopify", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/web-development/custom-apps", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/web-development/ecommerce-solutions", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/app-development", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/app-development/android-ios", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/app-development/hybrid-apps", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/business-software", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/business-software/desktop-software", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/business-software/saas-application", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/business-software/custom-business-software", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/ai-services", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/ai-services/ai-influencer", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/ai-services/ai-model-photoshoot", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/ai-services/ai-chatbot", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/ai-services/ai-content-creation", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/ai-services/ai-automation", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/social-media", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/social-media/platform-management", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/social-media/content-creation", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/social-media/community-engagement", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/design-video", priority: "0.8", changefreq: "monthly" },
+      { url: "/services/design-video/logo-branding", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/design-video/motion-graphics", priority: "0.7", changefreq: "monthly" },
+      { url: "/services/design-video/video-editing", priority: "0.7", changefreq: "monthly" },
+      { url: "/portfolio", priority: "0.8", changefreq: "monthly" },
+      { url: "/about", priority: "0.7", changefreq: "monthly" },
+      { url: "/blog", priority: "0.8", changefreq: "weekly" },
+      { url: "/contact", priority: "0.7", changefreq: "monthly" },
+    ];
+
+    let blogs: any[] = [];
+    try {
+      blogs = await storage.getAllBlogs();
+      blogs = blogs.filter((b: any) => b.published);
+    } catch (_) {}
+
+    const urlEntries = [
+      ...staticPages.map(p => `
+  <url>
+    <loc>${DOMAIN}${p.url}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${p.changefreq}</changefreq>
+    <priority>${p.priority}</priority>
+  </url>`),
+      ...blogs.map((b: any) => `
+  <url>
+    <loc>${DOMAIN}/blog/${b.slug}</loc>
+    <lastmod>${new Date(b.updatedAt || b.publishedAt || today).toISOString().split("T")[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`),
+    ];
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlEntries.join("")}
+</urlset>`;
+
+    res.setHeader("Content-Type", "application/xml");
+    res.send(xml);
+  });
+
   app.get("/api/seo/:pageSlug", async (req, res) => {
     try {
       const setting = await storage.getSeoByPageSlug(req.params.pageSlug);
