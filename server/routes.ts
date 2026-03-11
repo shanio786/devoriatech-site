@@ -374,6 +374,11 @@ export async function registerRoutes(
     }
   });
 
+  app.use("/admin", (_req, res, next) => {
+    res.setHeader("X-Robots-Tag", "noindex, nofollow");
+    next();
+  });
+
   app.post("/api/admin/login", async (req, res) => {
     const { username, password } = req.body;
     if (username === ADMIN_USERNAME && checkAdminPassword(password)) {

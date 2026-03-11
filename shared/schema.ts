@@ -70,6 +70,15 @@ export const seoSettings = pgTable("seo_settings", {
   metaTitle: text("meta_title"),
   metaDescription: text("meta_description"),
   metaKeywords: text("meta_keywords"),
+  focusKeyword: text("focus_keyword"),
+  canonicalUrl: text("canonical_url"),
+  ogTitle: text("og_title"),
+  ogDescription: text("og_description"),
+  ogImage: text("og_image"),
+  twitterTitle: text("twitter_title"),
+  twitterDescription: text("twitter_description"),
+  noIndex: boolean("no_index").default(false),
+  schemaType: text("schema_type").default("WebPage"),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 

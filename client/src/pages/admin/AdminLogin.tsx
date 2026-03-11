@@ -31,7 +31,7 @@ export default function AdminLogin() {
     mutationFn: (data: LoginForm) =>
       apiRequest("POST", "/api/admin/login", data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/me"] });
+      queryClient.setQueryData(["/api/admin/me"], { authenticated: true });
       navigate("/admin");
     },
     onError: () => {
