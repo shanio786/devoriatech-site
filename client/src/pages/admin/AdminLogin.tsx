@@ -65,7 +65,7 @@ export default function AdminLogin() {
                         <Input
                           {...field}
                           placeholder="admin"
-                          className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-blue-500"
+                          className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/30 focus:border-blue-500 caret-white cursor-text"
                           data-testid="input-username"
                         />
                       </div>
@@ -87,7 +87,7 @@ export default function AdminLogin() {
                           {...field}
                           type="password"
                           placeholder="••••••••"
-                          className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-blue-500"
+                          className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/30 focus:border-blue-500 caret-white cursor-text"
                           data-testid="input-password"
                         />
                       </div>
