@@ -20,7 +20,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     meta.name = "robots";
     meta.content = "noindex, nofollow";
     document.head.appendChild(meta);
-    return () => { document.head.removeChild(meta); };
+
+    const style = document.createElement("style");
+    style.id = "admin-cursor-override";
+    style.textContent = "body, a, button, [role='button'], input, textarea, select { cursor: auto !important; } button, a, [role='button'] { cursor: pointer !important; } input, textarea { cursor: text !important; }";
+    document.head.appendChild(style);
+
+    return () => {
+      document.head.removeChild(meta);
+      const s = document.getElementById("admin-cursor-override");
+      if (s) document.head.removeChild(s);
+    };
   }, []);
 
   const logoutMutation = useMutation({

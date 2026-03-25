@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +21,17 @@ type LoginForm = z.infer<typeof loginSchema>;
 export default function AdminLogin() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.id = "admin-cursor-override";
+    style.textContent = "body, a, button, [role='button'], input, textarea, select { cursor: auto !important; } button, a, [role='button'] { cursor: pointer !important; } input, textarea { cursor: text !important; }";
+    document.head.appendChild(style);
+    return () => {
+      const s = document.getElementById("admin-cursor-override");
+      if (s) document.head.removeChild(s);
+    };
+  }, []);
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
