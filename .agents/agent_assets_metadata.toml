@@ -6,3 +6,15 @@ id = "H1vnko2WKpW_GtQ7-Kh0Q"
 uri = "file://devoriatech-site-backup.tar.gz"
 type = "unspecified"
 title = "Devoria Tech — Full Site Backup"
+
+[[outputs]]
+id = "S8DIxcW7w2SpabtziMc3G"
+uri = "file://devoriatech-final.tar.gz"
+type = "unspecified"
+title = "Devoria Tech — Final Project Backup (4.9MB)"
+
+[[outputs]]
+id = "gaAby86CgnOrR6GUE4vZ9"
+uri = "file://devoriatech-hostinger.tar.gz"
+type = "unspecified"
+title = "Devoria Tech — Hostinger Deploy Package"
